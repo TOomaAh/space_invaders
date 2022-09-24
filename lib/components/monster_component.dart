@@ -6,9 +6,9 @@ class MonsterComponent extends SpriteComponent with CollisionCallbacks {
   final String _assetPath = 'monster_initial.png';
   // ignore: public_member_api_docs
   MonsterComponent({required InvadersGame game}) {
+    _game = game;
     size = Vector2.all(30);
     position = Vector2(100, 100);
-    _game = game;
   }
 
   late InvadersGame _game;

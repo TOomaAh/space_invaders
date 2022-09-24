@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:fyc/components/laser_component.dart';
@@ -40,6 +41,7 @@ class ShipComponent extends SpriteComponent
         position: position + Vector2(10, -40),
         game: _game,
       ));
+      FlameAudio.play('laser.mp3');
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
       position = position - Vector2(10, 0);
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowRight)) {

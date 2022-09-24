@@ -1,5 +1,8 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
+import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/painting.dart';
 
 import '../game/invaders.dart';
 
@@ -34,7 +37,7 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
     // TODO: implement update
     position.y -= 10;
 
-    if (position.y < 0) {
+    if (position.y < 100) {
       _game.remove(this);
     }
     super.update(dt);
