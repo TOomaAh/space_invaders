@@ -23,7 +23,7 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
     return Scaffold(
       body: FlameSplashScreen(
         showBefore: (BuildContext context) {
-          return const Text('Before logo');
+          return const Image(image: AssetImage('assets/images/esgi_logo.png'));
         },
         showAfter: (BuildContext context) {
           return const Text('After logo');
