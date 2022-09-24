@@ -1,6 +1,5 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/rendering.dart';
 import 'package:fyc/game/invaders.dart';
 
 /// Monster movement state
@@ -16,7 +15,6 @@ enum MonsterState {
 class MonsterComponent extends SpriteComponent with CollisionCallbacks {
   /// Create a new MonsterComponent at the given inside [game]
   MonsterComponent() {
-    _game = findGame()! as InvadersGame;
     size = Vector2.all(30);
     position = Vector2(100, 100);
   }
@@ -36,6 +34,7 @@ class MonsterComponent extends SpriteComponent with CollisionCallbacks {
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
+    _game = findGame()! as InvadersGame;
     await add(RectangleHitbox());
     sprite = await Sprite.load(_initialMove);
   }

@@ -1,12 +1,7 @@
 import 'package:flame/components.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fyc/game/invaders.dart';
 import 'package:fyc/ui/rounded_button.dart';
-import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
-import 'package:flame/experimental.dart';
-import 'package:flame/game.dart';
-import 'package:flame/rendering.dart';
-import 'package:flutter/rendering.dart';
 
 class StartMenu extends Component with HasGameRef<InvadersGame> {
   /// StartMenu is a Component

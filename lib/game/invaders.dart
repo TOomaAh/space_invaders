@@ -1,14 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
-import 'package:fyc/components/monster_component.dart';
-import 'package:fyc/components/ship_component.dart';
-import 'package:fyc/game/game.dart';
+import 'package:fyc/components/game_component.dart';
 import 'package:fyc/game/menu/start_menu.dart';
 
 /// InvadersGame is a Game
