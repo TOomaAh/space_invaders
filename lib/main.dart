@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flame_splash_screen/flame_splash_screen.dart';
 import 'package:fyc/game/invaders.dart';
+import 'package:fyc/game/splashscreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,8 +28,8 @@ class MyGame extends StatelessWidget {
       title: 'Space Invaders',
       theme: ThemeData.dark(),
       home: Scaffold(
-        body: GameWidget<InvadersGame>(
-          game: kDebugMode ? InvadersGame() : _game,
+        body: SplashScreenGame(
+          game: _game,
         ),
       ),
     );
