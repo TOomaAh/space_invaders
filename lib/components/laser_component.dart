@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -13,18 +15,18 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
   /// Create a new LaserComponent at the given inside [game]
   LaserComponent({
     required Vector2 position,
-    required InvadersGame game,
   }) : super(position: position) {
     size = Vector2.all(30);
-    _game = game;
+    _game = findGame()! as InvadersGame;
   }
 
   final String _assetPath = 'laser.png';
-  late InvadersGame _game;
+  late final InvadersGame _game;
 
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
+
     await add(RectangleHitbox());
     sprite = Sprite(_game.images.fromCache(_assetPath));
   }

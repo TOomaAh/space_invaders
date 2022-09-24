@@ -17,12 +17,11 @@ class ShipComponent extends SpriteComponent
   ShipComponent({
     required Vector2 position,
     required Vector2 size,
-    required InvadersGame game,
   }) : super(
           position: position,
           size: size,
         ) {
-    _game = game;
+    _game = findGame()! as InvadersGame;
   }
 
   final String _assetPath = 'ship.png';
@@ -41,7 +40,6 @@ class ShipComponent extends SpriteComponent
       _game.add(
         LaserComponent(
           position: position + Vector2(10, -40),
-          game: _game,
         ),
       );
       FlameAudio.play('laser.mp3');

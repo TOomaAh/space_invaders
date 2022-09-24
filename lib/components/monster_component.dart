@@ -15,8 +15,8 @@ enum MonsterState {
 /// MonsterComponent is a SpriteComponent
 class MonsterComponent extends SpriteComponent with CollisionCallbacks {
   /// Create a new MonsterComponent at the given inside [game]
-  MonsterComponent({required InvadersGame game}) {
-    _game = game;
+  MonsterComponent() {
+    _game = findGame()! as InvadersGame;
     size = Vector2.all(30);
     position = Vector2(100, 100);
   }

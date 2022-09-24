@@ -1,18 +1,25 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flame/components.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:fyc/components/monster_component.dart';
 import 'package:fyc/components/ship_component.dart';
+import 'package:fyc/game/game.dart';
+import 'package:fyc/game/menu/start_menu.dart';
 
 /// InvadersGame is a Game
 class InvadersGame extends FlameGame
-    with HasCollisionDetection, HasKeyboardHandlerComponents, HasTappables {
+    with
+        HasCollisionDetection,
+        HasKeyboardHandlerComponents,
+        HasTappableComponents {
+  late final RouterComponent router;
   @override
   Future<void>? onLoad() async {
-    await super.onLoad();
     await Flame.device.fullScreen();
     await Flame.device.setLandscape();
 
@@ -25,21 +32,16 @@ class InvadersGame extends FlameGame
 
     await images.loadAll(localImages);
 
-    final components = <SpriteComponent>[
-      ShipComponent(
-        //position is 1/2 of the screen width and 3/4 of the screen height
-        position: Vector2(
-          size.x / 2,
-          size.y * 0.75,
-        ),
-        size: Vector2(50, 50),
-        game: this,
+    await add(
+      router = RouterComponent(
+        initialRoute: 'menu',
+        routes: {
+          'menu': Route(StartMenu.new),
+          'start': Route(GameComponent.new),
+          'leave': Route(() => exit(0)),
+        },
       ),
-      MonsterComponent(game: this),
-    ];
-
-    await addAll(components);
+    );
+    await super.onLoad();
   }
-
-  void _loadImages() async {}
 }
