@@ -1,35 +1,24 @@
 import 'dart:async';
-
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
-import 'package:flame/events.dart';
-import 'package:flame/experimental.dart';
-import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'game/invaders.dart';
+import 'package:fyc/game/invaders.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final game = InvadersGame();
-
   runApp(
-    MyGame(
-      game: game,
-    ),
+    MyGame(),
   );
 }
 
+/// MyGame is a StatelessWidget
 class MyGame extends StatelessWidget {
   // ignore: public_member_api_docs
-  MyGame({required InvadersGame game, super.key}) {
-    _game = game;
-  }
+  MyGame({super.key});
 
-  late InvadersGame _game;
+  final InvadersGame _game = InvadersGame();
 
   @override
   Widget build(BuildContext context) {

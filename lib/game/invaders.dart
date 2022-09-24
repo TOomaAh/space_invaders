@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:fyc/components/monster_component.dart';
 import 'package:fyc/components/ship_component.dart';
 
+/// InvadersGame is a Game
 class InvadersGame extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents, HasTappables {
   @override

@@ -10,10 +10,10 @@ import 'package:flutter/services.dart';
 import 'package:fyc/components/laser_component.dart';
 import 'package:fyc/game/invaders.dart';
 
+/// ShipComponent is a SpriteComponent
 class ShipComponent extends SpriteComponent
     with CollisionCallbacks, KeyboardHandler {
-  final String _assetPath = 'ship.png';
-  // ignore: public_member_api_docs
+  /// Create a new ShipComponent at the given inside [game]
   ShipComponent({
     required Vector2 position,
     required Vector2 size,
@@ -25,6 +25,7 @@ class ShipComponent extends SpriteComponent
     _game = game;
   }
 
+  final String _assetPath = 'ship.png';
   late InvadersGame _game;
 
   @override

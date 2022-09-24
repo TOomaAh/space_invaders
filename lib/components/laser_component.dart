@@ -4,11 +4,13 @@ import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
 
-import '../game/invaders.dart';
+import 'package:fyc/game/invaders.dart';
 
+import 'monster_component.dart';
+
+/// LaserComponent is a SpriteComponent
 class LaserComponent extends SpriteComponent with CollisionCallbacks {
-  final String _assetPath = 'laser.png';
-  // ignore: public_member_api_docs
+  /// Create a new LaserComponent at the given inside [game]
   LaserComponent({
     required Vector2 position,
     required InvadersGame game,
@@ -17,6 +19,7 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
     _game = game;
   }
 
+  final String _assetPath = 'laser.png';
   late InvadersGame _game;
 
   @override
@@ -29,17 +32,21 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    remove(this);
+    if (other is MonsterComponent) {
+      _game.remove(this);
+      other.removeFromParent();
+      //FlameAudio.play('explosion.mp3');
+    }
   }
 
   @override
   void update(double dt) {
-    // TODO: implement update
     position.y -= 10;
 
     if (position.y < 100) {
-      _game.remove(this);
+      removeFromParent();
     }
+
     super.update(dt);
   }
 }
