@@ -5,6 +5,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:fyc/components/game_component.dart';
+import 'package:fyc/components/pause_component.dart';
 import 'package:fyc/game/menu/start_menu.dart';
 
 /// InvadersGame is a Game
@@ -34,6 +35,7 @@ class InvadersGame extends FlameGame
         routes: {
           'menu': Route(StartMenu.new),
           'start': Route(GameComponent.new),
+          'pause': Route(PauseComponent.new),
           'leave': Route(() => exit(0)),
         },
       ),
