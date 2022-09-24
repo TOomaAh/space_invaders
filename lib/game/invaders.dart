@@ -16,6 +16,15 @@ class InvadersGame extends FlameGame
     await Flame.device.fullScreen();
     await Flame.device.setLandscape();
 
+    final localImages = [
+      'laser.png',
+      'ship.png',
+      'monster_initial.png',
+      'monster_move.jpg',
+    ];
+
+    await images.loadAll(localImages);
+
     final components = <SpriteComponent>[
       ShipComponent(
         //position is 1/2 of the screen width and 3/4 of the screen height
@@ -31,4 +40,6 @@ class InvadersGame extends FlameGame
 
     await addAll(components);
   }
+
+  void _loadImages() async {}
 }

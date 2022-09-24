@@ -26,7 +26,7 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
   Future<void>? onLoad() async {
     await super.onLoad();
     await add(RectangleHitbox());
-    sprite = await Sprite.load(_assetPath);
+    sprite = Sprite(_game.images.fromCache(_assetPath));
   }
 
   @override

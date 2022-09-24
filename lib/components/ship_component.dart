@@ -32,16 +32,18 @@ class ShipComponent extends SpriteComponent
   Future<void>? onLoad() async {
     await super.onLoad();
     await add(RectangleHitbox());
-    sprite = await Sprite.load(_assetPath);
+    sprite = Sprite(_game.images.fromCache(_assetPath));
   }
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     if (keysPressed.contains(LogicalKeyboardKey.space)) {
-      _game.add(LaserComponent(
-        position: position + Vector2(10, -40),
-        game: _game,
-      ));
+      _game.add(
+        LaserComponent(
+          position: position + Vector2(10, -40),
+          game: _game,
+        ),
+      );
       FlameAudio.play('laser.mp3');
     } else if (keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
       position = position - Vector2(10, 0);

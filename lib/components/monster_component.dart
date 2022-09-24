@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fyc/game/invaders.dart';
 
 /// Monster movement state
@@ -61,10 +62,10 @@ class MonsterComponent extends SpriteComponent with CollisionCallbacks {
       _animationTime = 0.0;
       if (_currentState == MonsterState.idle) {
         _currentState = MonsterState.moving;
-        sprite = await Sprite.load(_move);
+        sprite = Sprite(_game.images.fromCache(_move));
       } else {
         _currentState = MonsterState.idle;
-        sprite = await Sprite.load(_initialMove);
+        sprite = Sprite(_game.images.fromCache(_initialMove));
       }
       _animationTime = 0;
     }
