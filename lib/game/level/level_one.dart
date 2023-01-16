@@ -2,12 +2,11 @@ import 'package:flame/components.dart';
 import 'package:fyc/components/monster_component.dart';
 import 'package:fyc/game/invaders.dart';
 
-class LevelOne extends Component {
+class LevelOne extends Component with HasGameRef<InvadersGame> {
   LevelOne() {}
 
   List<Component> getComponent() {
     final monsters = <Component>[];
-    final game = findGame()! as InvadersGame;
     //for 1 to 20
     for (var i = 0; i < 10; i++) {
       //create a new monster
@@ -22,9 +21,7 @@ class LevelOne extends Component {
 
   ///return true if all monsters are dead
   bool gameisFinished() {
-    final game = findGame()! as InvadersGame;
-
-    final child = game.children;
+    final child = gameRef.children;
     for (final element in child) {
       if (element is MonsterComponent) {
         return false;
