@@ -14,14 +14,14 @@ enum MonsterState {
 /// MonsterComponent is a SpriteComponent
 class MonsterComponent extends SpriteComponent with CollisionCallbacks {
   /// Create a new MonsterComponent at the given inside [game]
-  MonsterComponent() {
+  MonsterComponent({required Vector2 position}) {
     size = Vector2.all(30);
-    position = Vector2(100, 100);
+    this.position = position;
   }
 
   final String _initialMove = 'monster_initial.png';
   final String _move = 'monster_move.jpg';
-
+  int _health = 100;
   late InvadersGame _game;
   var _currentState = MonsterState.idle;
 
@@ -31,6 +31,8 @@ class MonsterComponent extends SpriteComponent with CollisionCallbacks {
   final _movementSpeed = .5;
   var _movementTime = 0.0;
 
+  double _direction = 1;
+
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
@@ -39,17 +41,20 @@ class MonsterComponent extends SpriteComponent with CollisionCallbacks {
     sprite = await Sprite.load(_initialMove);
   }
 
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    _game.remove(this);
-  }
-
   void move() {
-    if (_game.size.x - position.x < 30) {
-      position = position + Vector2(-10, 30);
+    if (_game.size.x - position.x < findGame()!.size.x - 10) {
+      position = position + Vector2(-10 * _direction, 30);
     } else {
       position = position + Vector2(10, 0);
+      _direction *= -1;
+    }
+  }
+
+  void takeDamage(int damage) {
+    _health -= damage;
+    if (_health <= 0) {
+      _game.remove(this);
+      removeFromParent();
     }
   }
 

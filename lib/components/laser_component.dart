@@ -22,6 +22,8 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
   final String _assetPath = 'laser.png';
   late InvadersGame _game;
 
+  int _degat = 100;
+
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
@@ -33,8 +35,11 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is MonsterComponent) {
-      _game.remove(this);
+      MonsterComponent monster = other;
+
+      monster.takeDamage(_degat);
       other.removeFromParent();
+      removeFromParent();
       //FlameAudio.play('explosion.mp3');
     }
   }
@@ -43,7 +48,7 @@ class LaserComponent extends SpriteComponent with CollisionCallbacks {
   void update(double dt) {
     position.y -= 10;
 
-    if (position.y < 100) {
+    if (position.y < 0) {
       removeFromParent();
     }
 

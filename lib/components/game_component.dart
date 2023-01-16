@@ -4,6 +4,7 @@ import 'package:fyc/components/monster_component.dart';
 import 'package:fyc/components/pause_button.dart';
 import 'package:fyc/components/ship_component.dart';
 import 'package:fyc/game/invaders.dart';
+import 'package:fyc/game/level/level_one.dart';
 import 'package:fyc/ui/simple_button.dart';
 
 /// GameComponent is a PositionComponent
@@ -11,6 +12,8 @@ class GameComponent extends Component {
   @override
   Future<void>? onLoad() async {
     final game = findGame()! as InvadersGame;
+
+    final levels = [LevelOne()];
 
     final components = <Component>[
       BackButton(),
@@ -24,7 +27,7 @@ class GameComponent extends Component {
         size: Vector2(50, 50),
         game: game,
       ),
-      MonsterComponent(),
+      ...levels[0].getComponent(),
     ];
 
     await game.addAll(components);

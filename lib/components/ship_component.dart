@@ -52,4 +52,9 @@ class ShipComponent extends SpriteComponent
     }
     return true;
   }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+  }
 }

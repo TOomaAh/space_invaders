@@ -8,7 +8,6 @@ import 'package:fyc/game/splashscreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(
     MyGame(),
   );
