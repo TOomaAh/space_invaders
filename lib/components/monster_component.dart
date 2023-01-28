@@ -27,11 +27,6 @@ class MonsterComponent extends SpriteComponent with HasGameRef<InvadersGame> {
   final _animationSpeed = .2;
   var _animationTime = 0.0;
 
-  final _movementSpeed = .5;
-  var _movementTime = 0.0;
-
-  double _direction = 1;
-
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
