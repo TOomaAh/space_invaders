@@ -22,6 +22,7 @@ class MyGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _loadAssets();
     return MaterialApp(
       debugShowCheckedModeBanner: false, //remove debug banner,
       title: 'Space Invaders',
@@ -32,5 +33,14 @@ class MyGame extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _loadAssets() async {
+    await _game.images.loadAll([
+      'laser.png',
+      'ship.png',
+      'monster_initial.png',
+      'monster_move.jpg',
+    ]);
   }
 }

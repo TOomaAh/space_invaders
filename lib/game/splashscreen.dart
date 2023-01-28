@@ -1,6 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flame_splash_screen/flame_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fyc/components/pause_component.dart';
 
 import 'invaders.dart';
 
@@ -34,6 +35,9 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
           MaterialPageRoute(
             builder: (context) => GameWidget<InvadersGame>(
               game: widget.game,
+              overlayBuilderMap: {
+                'pause': (context, InvadersGame game) => PauseMenu(game: game),
+              },
             ),
           ),
         ),

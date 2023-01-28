@@ -19,25 +19,13 @@ class InvadersGame extends FlameGame
 
   @override
   Future<void>? onLoad() async {
-    await Flame.device.fullScreen();
-    await Flame.device.setLandscape();
-
-    final localImages = [
-      'laser.png',
-      'ship.png',
-      'monster_initial.png',
-      'monster_move.jpg',
-    ];
-
-    await images.loadAll(localImages);
-
     await add(
       router = RouterComponent(
         initialRoute: 'menu',
         routes: {
           'menu': Route(StartMenu.new),
           'start': Route(GameComponent.new),
-          'pause': Route(PauseComponent.new),
+          //'pause': Route(PauseComponent.new),
           'leave': Route(() => exit(0)),
         },
       ),

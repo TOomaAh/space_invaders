@@ -7,7 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:fyc/components/pause_component.dart';
 
 /// PauseButton is a Route
-class PauseRoute extends Route {
+/*class PauseRoute extends Route {
   /// Pause route
   PauseRoute() : super(PauseComponent.new, transparent: true);
 
@@ -26,4 +26,4 @@ class PauseRoute extends Route {
       ..resumeTime()
       ..removeRenderEffect();
   }
-}
+}*/

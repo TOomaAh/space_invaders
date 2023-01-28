@@ -47,9 +47,9 @@ abstract class SimpleButton extends PositionComponent with TapCallbacks {
 }
 
 /// SimpleButton is a PositionComponent
-class BackButton extends SimpleButton with HasGameRef<InvadersGame> {
+class BackButtonCustom extends SimpleButton with HasGameRef<InvadersGame> {
   /// BackButton is a SimpleButton
-  BackButton()
+  BackButtonCustom()
       : super(
           Path()
             ..moveTo(22, 8)

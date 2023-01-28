@@ -21,6 +21,7 @@ class PauseButton extends SimpleButton with HasGameRef<InvadersGame> {
         );
   @override
   void action() {
-    gameRef.router.pushNamed('pause');
+    gameRef.overlays.add('pause');
+    gameRef.pauseEngine();
   }
 }

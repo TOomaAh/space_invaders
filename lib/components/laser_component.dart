@@ -24,6 +24,9 @@ class LaserComponent extends SpriteComponent
 
   final int _damage = 100;
 
+  /// return damage
+  int get damage => _damage;
+
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
@@ -35,11 +38,8 @@ class LaserComponent extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is MonsterComponent) {
-      other
-        ..takeDamage(_damage)
-        ..removeFromParent();
       removeFromParent();
-      //FlameAudio.play('explosion.mp3');
+      FlameAudio.play('explosion.mp3');
     }
 
     if (other is ScreenHitbox) {

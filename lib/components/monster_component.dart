@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:fyc/components/laser_component.dart';
 import 'package:fyc/game/invaders.dart';
 
 /// Monster movement state
@@ -12,7 +13,8 @@ enum MonsterState {
 }
 
 /// MonsterComponent is a SpriteComponent
-class MonsterComponent extends SpriteComponent with HasGameRef<InvadersGame> {
+class MonsterComponent extends SpriteComponent
+    with CollisionCallbacks, HasGameRef<InvadersGame> {
   /// Create a new MonsterComponent at the given inside [game]
   MonsterComponent() {
     size = Vector2.all(30);
@@ -35,12 +37,20 @@ class MonsterComponent extends SpriteComponent with HasGameRef<InvadersGame> {
     sprite = await Sprite.load(_initialMove);
   }
 
-  void takeDamage(int damage) {
+  void _takeDamage(int damage) {
     _health -= damage;
     if (_health <= 0) {
-      gameRef.remove(this);
       removeFromParent();
     }
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is LaserComponent) {
+      _takeDamage(other.damage);
+      removeFromParent();
+    }
+    super.onCollision(intersectionPoints, other);
   }
 
   @override
