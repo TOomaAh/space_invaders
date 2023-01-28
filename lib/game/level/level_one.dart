@@ -3,8 +3,6 @@ import 'package:fyc/components/monster_component.dart';
 import 'package:fyc/game/invaders.dart';
 
 class LevelOne extends Component with HasGameRef<InvadersGame> {
-  LevelOne() {}
-
   List<Component> getComponent() {
     final monsters = <Component>[];
     //for 1 to 20
@@ -19,14 +17,14 @@ class LevelOne extends Component with HasGameRef<InvadersGame> {
     ];
   }
 
-  ///return true if all monsters are dead
-  bool gameisFinished() {
+  /// return true if all monsters are dead
+  bool gameIsFinished() {
     final child = gameRef.children;
     for (final element in child) {
       if (element is MonsterComponent) {
         return false;
       }
     }
-    return false;
+    return true;
   }
 }

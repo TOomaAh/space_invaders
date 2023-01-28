@@ -18,7 +18,7 @@ class StartMenu extends Component with HasGameRef<InvadersGame> {
         ),
       ),
       _start_button = RoundedButton(
-        text: 'start',
+        text: 'Start',
         action: () => gameRef.router.pushNamed('start'),
         color: const Color(0xffadde6c),
         borderColor: const Color(0xffedffab),
