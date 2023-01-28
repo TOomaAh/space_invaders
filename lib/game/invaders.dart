@@ -15,6 +15,8 @@ class InvadersGame extends FlameGame
         HasKeyboardHandlerComponents,
         HasTappableComponents {
   late final RouterComponent router;
+  bool _hasFire = false;
+
   @override
   Future<void>? onLoad() async {
     await Flame.device.fullScreen();

@@ -9,48 +9,47 @@ import 'package:fyc/game/invaders.dart';
 import 'monster_component.dart';
 
 /// LaserComponent is a SpriteComponent
-class LaserComponent extends SpriteComponent with CollisionCallbacks {
+class LaserComponent extends SpriteComponent
+    with CollisionCallbacks, HasGameRef<InvadersGame> {
   /// Create a new LaserComponent at the given inside [game]
   LaserComponent({
     required Vector2 position,
-    required InvadersGame game,
-  }) : super(position: position) {
+  }) : super(
+          position: position,
+        ) {
     size = Vector2.all(30);
-    _game = game;
   }
 
   final String _assetPath = 'laser.png';
-  late InvadersGame _game;
 
-  int _degat = 100;
+  final int _damage = 100;
 
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
     await add(RectangleHitbox());
-    sprite = Sprite(_game.images.fromCache(_assetPath));
+    sprite = Sprite(game.images.fromCache(_assetPath));
   }
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is MonsterComponent) {
-      MonsterComponent monster = other;
-
-      monster.takeDamage(_degat);
-      other.removeFromParent();
+      other
+        ..takeDamage(_damage)
+        ..removeFromParent();
       removeFromParent();
       //FlameAudio.play('explosion.mp3');
+    }
+
+    if (other is ScreenHitbox) {
+      removeFromParent();
     }
   }
 
   @override
   void update(double dt) {
-    position.y -= 10;
-
-    if (position.y < 0) {
-      removeFromParent();
-    }
+    position.y -= 500 * dt;
 
     super.update(dt);
   }
