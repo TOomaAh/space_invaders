@@ -46,7 +46,6 @@ class MonsterComponent extends SpriteComponent with HasGameRef<InvadersGame> {
   @override
   void update(double dt) async {
     _animationTime += dt;
-    _movementTime += dt;
     if (_animationTime >= _animationSpeed) {
       _animationTime = 0.0;
       if (_currentState == MonsterState.idle) {
