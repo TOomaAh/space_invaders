@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -21,12 +22,14 @@ class InvadersGame extends FlameGame
 
   @override
   Future<void>? onLoad() async {
+    final gameComponent = GameComponent(playerData: playerData);
+
     await add(
       router = RouterComponent(
         initialRoute: 'menu',
         routes: {
           'menu': Route(StartMenu.new),
-          'start': Route(() => GameComponent(playerData: playerData)),
+          'start': Route(() => gameComponent),
           'leave': Route(() => exit(0)),
         },
       ),

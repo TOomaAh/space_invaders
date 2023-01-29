@@ -8,6 +8,7 @@ import 'package:fyc/components/pause_button.dart';
 import 'package:fyc/components/ship_component.dart';
 import 'package:fyc/components/spawn_component.dart';
 import 'package:fyc/game/invaders.dart';
+import 'package:fyc/game/level/level.dart';
 import 'package:fyc/game/level/level_one.dart';
 import 'package:fyc/game/player_data.dart';
 import 'package:fyc/ui/simple_button.dart';
@@ -22,11 +23,15 @@ class GameComponent extends PositionComponent
   final levels = [LevelOne()];
   int _currentLevel = 0;
 
+  // levels getter
+  List<Level> get level => levels;
+
   /// PlayerData
   PlayerData playerData;
 
   @override
   Future<void>? onLoad() async {
+    print('GameComponent.onLoad()');
     size = Vector2(
       gameRef.size.x - 60,
       gameRef.size.y * .95,
@@ -35,7 +40,7 @@ class GameComponent extends PositionComponent
     game.overlays.add('score');
     final components = <Component>[
       ScreenHitbox(),
-      BackButtonCustom(),
+      BackButtonCustom(gameComponent: this),
       PauseButton(),
       ShipComponent(
         //position is 1/2 of the screen width and 3/4 of the screen height
@@ -86,13 +91,5 @@ class GameComponent extends PositionComponent
         gameRef.router.pop();
       }
     }
-  }
-
-  Future<void> _restart() async {
-    final spawnComponent = children
-        .firstWhere((element) => element is SpawnComponent) as SpawnComponent;
-    remove(spawnComponent);
-    _currentLevel = 0;
-    await add(SpawnComponent(level: levels[_currentLevel]));
   }
 }

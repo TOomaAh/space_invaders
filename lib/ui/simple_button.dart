@@ -4,7 +4,10 @@ import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/rendering.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fyc/components/game_component.dart';
+import 'package:fyc/components/spawn_component.dart';
 import 'package:fyc/game/invaders.dart';
+import 'package:fyc/game/player_data.dart';
 
 abstract class SimpleButton extends PositionComponent with TapCallbacks {
   SimpleButton(this._iconPath, {super.position}) : super(size: Vector2.all(40));
@@ -49,7 +52,7 @@ abstract class SimpleButton extends PositionComponent with TapCallbacks {
 /// SimpleButton is a PositionComponent
 class BackButtonCustom extends SimpleButton with HasGameRef<InvadersGame> {
   /// BackButton is a SimpleButton
-  BackButtonCustom()
+  BackButtonCustom({required this.gameComponent})
       : super(
           Path()
             ..moveTo(22, 8)
@@ -60,8 +63,13 @@ class BackButtonCustom extends SimpleButton with HasGameRef<InvadersGame> {
           position: Vector2.all(10),
         );
 
+  final GameComponent gameComponent;
+
   @override
   void action() {
+    gameComponent
+      ..removeAll(gameComponent.children.whereType<SpawnComponent>())
+      ..add(SpawnComponent(level: gameComponent.levels[0]));
     gameRef.overlays.remove('pause');
     gameRef.overlays.remove('score');
     gameRef.router.pop();
