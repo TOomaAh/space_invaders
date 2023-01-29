@@ -41,6 +41,7 @@ class MyGame extends StatelessWidget {
       'ship.png',
       'monster_initial.png',
       'monster_move.jpg',
+      'space_invaders_logo.png',
     ]);
   }
 }

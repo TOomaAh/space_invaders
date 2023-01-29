@@ -28,7 +28,9 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
           return const Image(image: AssetImage('assets/images/esgi_logo.png'));
         },
         showAfter: (BuildContext context) {
-          return const Text('After logo');
+          return const Image(
+            image: AssetImage('assets/images/space_invaders_logo.png'),
+          );
         },
         theme: FlameSplashTheme.dark,
         onFinish: (context) => Navigator.pushReplacement<void, void>(
