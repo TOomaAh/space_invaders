@@ -6,6 +6,7 @@ import 'package:flame/rendering.dart';
 import 'package:flutter/rendering.dart';
 
 class RoundedButton extends PositionComponent with TapCallbacks {
+  // ignore: public_member_api_docs
   RoundedButton({
     required this.text,
     required this.action,

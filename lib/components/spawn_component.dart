@@ -1,5 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fyc/components/game_component.dart';
 import 'package:fyc/components/monster_component.dart';
 import 'package:fyc/game/level/level.dart';
@@ -12,40 +14,48 @@ class SpawnComponent extends PositionComponent
     with CollisionCallbacks, HasGameRef<InvadersGame> {
   /// SpawnComponent is a Component
   SpawnComponent({
-    this.level = 1,
-  }) : super(position: Vector2(10, 50));
+    required this.level,
+  }) : super(position: Vector2(10, 100));
 
-  /// child is the component to spawn
-  final List<Level> levels = [LevelOne()];
+  /// Level to load
+  final Level level;
 
-  /// level to load
-  final int level;
   double _moveTime = 0;
-  final double _movementSpeed = .5;
-  bool _right = true;
+  final double _movementSpeed = 1;
+  double _right = 1;
 
   @override
   Future<void> onLoad() async {
     final gameComponent = parent! as GameComponent;
     size = Vector2(gameComponent.size.x, gameComponent.size.y * 0.5);
-    final childToSpawn = levels[level - 1].getComponent();
-    final nbrOfRow = size.y / 80;
-    final nbrOfColumn = size.x / 130;
+    await add(RectangleHitbox());
+    await _addAllMonster();
+  }
+
+  Future<void> _addAllMonster() async {
+    final childToSpawn = level.getComponent();
+    final sizeOfOneRow = size.y / 7;
+    final sizeOfOneColumn = size.x / 12;
+
+    final center = Vector2(sizeOfOneColumn / 2, sizeOfOneRow / 2);
 
     // for each row spawn the component
-    for (var i = 0; i < nbrOfRow; i++) {
+    for (var i = 0; i < 7; i++) {
       // for each column spawn the component
-      for (var j = 0; j < nbrOfColumn; j++) {
+      for (var j = 0; j < 12; j++) {
         if (i > childToSpawn.length - 1) {
           // spawn default component
           await add(
-            MonsterComponent()..position = Vector2(10 + j * 80, 10 + i * 50),
+            MonsterComponent()
+              ..position =
+                  Vector2(j * sizeOfOneColumn, i * sizeOfOneRow) + center,
           );
         } else {
           // spawn the component
           await add(
             (childToSpawn[i][0] as MonsterComponent).clone()
-              ..position = Vector2(10 + j * 80, 10 + i * 50),
+              ..position =
+                  Vector2(j * sizeOfOneColumn, i * sizeOfOneRow) + center,
           );
         }
       }
@@ -57,7 +67,7 @@ class SpawnComponent extends PositionComponent
     _moveTime += dt;
     if (_moveTime >= _movementSpeed) {
       _moveTime = .0;
-      if (_right) {
+      if (_right == 1) {
         position.x += 200 * dt;
       } else {
         position.x -= 200 * dt;
@@ -70,8 +80,15 @@ class SpawnComponent extends PositionComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     if (other is ScreenHitbox) {
-      _right = !_right;
-      position = position + Vector2(0, 200);
+      _right = -_right;
+      position
+        ..y += 20
+        ..x += 10 * _right;
     }
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fyc/components/laser_component.dart';
 import 'package:fyc/game/invaders.dart';
 
@@ -19,6 +20,7 @@ class MonsterComponent extends SpriteComponent
   MonsterComponent() {
     size = Vector2.all(30);
     position = _initialPosition;
+    anchor = Anchor.center;
   }
   final Vector2 _initialPosition = Vector2(0, 0);
   final String _initialMove = 'monster_initial.png';

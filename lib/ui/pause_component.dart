@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/experimental.dart';
@@ -25,14 +26,21 @@ class PauseMenu extends StatelessWidget {
               game.overlays.remove('pause');
             },
             child: ColoredBox(
-              color: Colors.black.withOpacity(0.5),
-              child: const Center(
-                child: Text(
-                  'PAUSED',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 50,
-                  ),
+              color: Colors.black.withOpacity(0.9),
+              child: Center(
+                child: AnimatedTextKit(
+                  animatedTexts: [
+                    ColorizeAnimatedText(
+                      'Paused',
+                      textStyle: const TextStyle(fontSize: 50.0),
+                      colors: const [
+                        Colors.purple,
+                        Colors.blue,
+                        Colors.yellow,
+                        Colors.red,
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

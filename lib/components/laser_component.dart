@@ -3,6 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
+import 'package:fyc/components/game_component.dart';
 
 import 'package:fyc/game/invaders.dart';
 
@@ -37,9 +38,11 @@ class LaserComponent extends SpriteComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
+    var parentComponent = parent! as GameComponent;
     if (other is MonsterComponent) {
       removeFromParent();
       FlameAudio.play('explosion.mp3');
+      parentComponent.increaseScore();
     }
 
     if (other is ScreenHitbox) {

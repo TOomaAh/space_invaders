@@ -61,5 +61,9 @@ class BackButtonCustom extends SimpleButton with HasGameRef<InvadersGame> {
         );
 
   @override
-  void action() => gameRef.router.pop();
+  void action() {
+    gameRef.overlays.remove('pause');
+    gameRef.overlays.remove('score');
+    gameRef.router.pop();
+  }
 }

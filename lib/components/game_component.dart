@@ -9,13 +9,21 @@ import 'package:fyc/components/ship_component.dart';
 import 'package:fyc/components/spawn_component.dart';
 import 'package:fyc/game/invaders.dart';
 import 'package:fyc/game/level/level_one.dart';
+import 'package:fyc/game/player_data.dart';
 import 'package:fyc/ui/simple_button.dart';
 
 /// GameComponent is a PositionComponent
 class GameComponent extends PositionComponent
     with CollisionCallbacks, HasGameRef<InvadersGame> {
-  GameComponent() : super(position: Vector2(10, 10));
+  /// GameComponent is a PositionComponent
+  GameComponent({required this.playerData}) : super(position: Vector2(10, 10));
+
+  /// List of levels
   final levels = [LevelOne()];
+  int _currentLevel = 0;
+
+  /// PlayerData
+  PlayerData playerData;
 
   @override
   Future<void>? onLoad() async {
@@ -23,13 +31,9 @@ class GameComponent extends PositionComponent
       gameRef.size.x - 60,
       gameRef.size.y * .95,
     );
-    /* final rectangleComponent = RectangleComponent(
-      position: position,
-      size: size,
-      paint: Paint()..color = Colors.white,
-    );*/
+
+    game.overlays.add('score');
     final components = <Component>[
-      //rectangleComponent,
       ScreenHitbox(),
       BackButtonCustom(),
       PauseButton(),
@@ -41,9 +45,54 @@ class GameComponent extends PositionComponent
         ),
         size: Vector2(50, 50),
       ),
-      SpawnComponent(),
+      SpawnComponent(level: levels[0]),
     ];
     await addAll(components);
     await super.onLoad();
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    this.size = Vector2(
+      gameRef.size.x - 60,
+      gameRef.size.y * .95,
+    );
+
+    // scale the children
+    for (final element in children) {
+      if (element is MonsterComponent) {
+        element.onGameResize(size);
+      }
+    }
+    super.onGameResize(size);
+  }
+
+  /// Called when the component is removed from the game
+  void increaseScore() {
+    playerData.score.value++;
+  }
+
+  void _isGameOver() async {
+    final spawnComponent = children
+        .firstWhere((element) => element is SpawnComponent) as SpawnComponent;
+
+    if (spawnComponent.children.isEmpty) {
+      remove(spawnComponent);
+      if (_currentLevel < levels.length - 1) {
+        _currentLevel++;
+        await add(SpawnComponent(level: levels[_currentLevel]));
+      } else {
+        // game over
+        gameRef.router.pop();
+      }
+    }
+  }
+
+  Future<void> _restart() async {
+    final spawnComponent = children
+        .firstWhere((element) => element is SpawnComponent) as SpawnComponent;
+    remove(spawnComponent);
+    _currentLevel = 0;
+    await add(SpawnComponent(level: levels[_currentLevel]));
   }
 }

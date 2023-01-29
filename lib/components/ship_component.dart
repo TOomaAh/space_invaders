@@ -1,13 +1,10 @@
 // ignore: public_member_api_docs
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
-import 'package:flame/extensions.dart';
-import 'package:flame/flame.dart';
-import 'package:flame/sprite.dart';
-import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
+import 'package:flame/collisions.dart' show CollisionCallbacks, RectangleHitbox;
+import 'package:flame/components.dart'
+    show HasGameRef, KeyboardHandler, Sprite, SpriteComponent, Vector2;
+import 'package:flame_audio/flame_audio.dart' show FlameAudio;
+import 'package:flutter/services.dart'
+    show LogicalKeyboardKey, RawKeyEvent, RawKeyUpEvent;
 import 'package:fyc/components/laser_component.dart';
 import 'package:fyc/game/invaders.dart';
 
@@ -25,7 +22,7 @@ class ShipComponent extends SpriteComponent
 
   final String _assetPath = 'ship.png';
   bool _isFire = false;
-  ShipDirection _direction = ShipDirection.none;
+  _ShipDirection _direction = _ShipDirection.none;
 
   @override
   Future<void>? onLoad() async {
@@ -39,14 +36,14 @@ class ShipComponent extends SpriteComponent
     if (event.logicalKey == LogicalKeyboardKey.space) {
       _isFire = true;
     } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
-      _direction = ShipDirection.left;
+      _direction = _ShipDirection.left;
     } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
-      _direction = ShipDirection.right;
+      _direction = _ShipDirection.right;
     }
 
     if (event is RawKeyUpEvent &&
         event.logicalKey != LogicalKeyboardKey.space) {
-      _direction = ShipDirection.none;
+      _direction = _ShipDirection.none;
     }
     return true;
   }
@@ -71,9 +68,9 @@ class ShipComponent extends SpriteComponent
     if (_isFire) {
       await _fire();
     }
-    if (_direction == ShipDirection.left) {
+    if (_direction == _ShipDirection.left) {
       position = position - Vector2(50, 0) * dt;
-    } else if (_direction == ShipDirection.right) {
+    } else if (_direction == _ShipDirection.right) {
       position = position + Vector2(50, 0) * dt;
     }
     super.update(dt);
@@ -85,4 +82,4 @@ class ShipComponent extends SpriteComponent
   }
 }
 
-enum ShipDirection { left, right, none }
+enum _ShipDirection { left, right, none }

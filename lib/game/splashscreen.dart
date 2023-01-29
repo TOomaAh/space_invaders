@@ -1,9 +1,10 @@
 import 'package:flame/game.dart';
 import 'package:flame_splash_screen/flame_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:fyc/components/pause_component.dart';
-
-import 'invaders.dart';
+import 'package:fyc/game/invaders.dart';
+import 'package:fyc/ui/game_over.dart';
+import 'package:fyc/ui/pause_component.dart';
+import 'package:fyc/ui/score_component.dart';
 
 /// new Splashscreen
 class SplashScreenGame extends StatefulWidget {
@@ -36,7 +37,15 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
             builder: (context) => GameWidget<InvadersGame>(
               game: widget.game,
               overlayBuilderMap: {
-                'pause': (context, InvadersGame game) => PauseMenu(game: game),
+                'pause': (context, InvadersGame game) => PauseMenu(
+                      game: game,
+                    ),
+                'gameOver': (context, InvadersGame game) => GameOver(
+                      game: game,
+                    ),
+                'score': (context, InvadersGame game) => ScoreWidget(
+                      game: game,
+                    ),
               },
             ),
           ),
