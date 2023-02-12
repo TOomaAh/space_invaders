@@ -38,10 +38,10 @@ class MyGame extends StatelessWidget {
   Future<void> _loadAssets() async {
     await _game.images.loadAll([
       'laser.png',
-      'ship.png',
-      'monster_initial.png',
-      'monster_move.jpg',
-      'space_invaders_logo.png',
+      'player.png',
+      'green.png',
+      'red.png',
+      'yellow.png',
     ]);
   }
 }

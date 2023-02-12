@@ -1,13 +1,11 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:fyc/components/game_component.dart';
-import 'package:fyc/components/monster_component.dart';
+import 'package:fyc/components/monster/monster.dart';
+import 'package:fyc/components/monster/simple_monster_component.dart';
+import 'package:fyc/components/ship_component.dart';
+import 'package:fyc/game/invaders.dart';
 import 'package:fyc/game/level/level.dart';
-import 'package:fyc/game/level/level_one.dart';
-
-import '../game/invaders.dart';
 
 /// SpawnComponent is a Component
 class SpawnComponent extends PositionComponent
@@ -21,8 +19,13 @@ class SpawnComponent extends PositionComponent
   final Level level;
 
   double _moveTime = 0;
-  final double _movementSpeed = 1;
+  double _movementSpeed = 1;
   double _right = 1;
+
+  final int _speed = 200;
+
+  final int _nbrRow = 5;
+  final int _nbrColumn = 10;
 
   @override
   Future<void> onLoad() async {
@@ -34,26 +37,26 @@ class SpawnComponent extends PositionComponent
 
   Future<void> _addAllMonster() async {
     final childToSpawn = level.getComponent();
-    final sizeOfOneRow = size.y / 7;
-    final sizeOfOneColumn = size.x / 12;
+    final sizeOfOneRow = size.y / _nbrRow;
+    final sizeOfOneColumn = size.x / _nbrColumn;
 
     final center = Vector2(sizeOfOneColumn / 2, sizeOfOneRow / 2);
 
     // for each row spawn the component
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < _nbrRow; i++) {
       // for each column spawn the component
-      for (var j = 0; j < 12; j++) {
+      for (var j = 0; j < _nbrColumn; j++) {
         if (i > childToSpawn.length - 1) {
           // spawn default component
           await add(
-            MonsterComponent()
+            SimpleMonsterComponent()
               ..position =
                   Vector2(j * sizeOfOneColumn, i * sizeOfOneRow) + center,
           );
         } else {
           // spawn the component
           await add(
-            (childToSpawn[i][0] as MonsterComponent).clone()
+            (childToSpawn[i][0]()).clone()
               ..position =
                   Vector2(j * sizeOfOneColumn, i * sizeOfOneRow) + center,
           );
@@ -68,10 +71,11 @@ class SpawnComponent extends PositionComponent
     if (_moveTime >= _movementSpeed) {
       _moveTime = .0;
       if (_right == 1) {
-        position.x += 200 * dt;
+        position.x += _speed * dt;
       } else {
-        position.x -= 200 * dt;
+        position.x -= _speed * dt;
       }
+      _movementSpeed > .5 ? _movementSpeed -= dt : _movementSpeed = .5;
     }
     super.update(dt);
   }
@@ -84,6 +88,10 @@ class SpawnComponent extends PositionComponent
       position
         ..y += 20
         ..x += 10 * _right;
+    }
+
+    if (other is ShipComponent) {
+      (parent! as GameComponent).gameOver();
     }
   }
 

@@ -1,20 +1,21 @@
-import 'package:flame/components.dart';
-import 'package:fyc/components/monster_component.dart';
+import 'package:fyc/components/monster/mega_monster_component.dart';
+import 'package:fyc/components/monster/monster.dart';
+import 'package:fyc/components/monster/simple_monster_component.dart';
 import 'package:fyc/game/invaders.dart';
 import 'package:fyc/game/level/level.dart';
 
 /// Level One is the first level
 class LevelOne extends Level {
-  final monsters = [
-    [MonsterComponent()],
-    [MonsterComponent()],
-    [MonsterComponent()],
-    [MonsterComponent()],
-    [MonsterComponent()],
+  final List<List<Monster Function()>> monsters = [
+    [MegaMonsterComponent.new],
+    [SimpleMonsterComponent.new],
+    [SimpleMonsterComponent.new],
+    [SimpleMonsterComponent.new],
+    [SimpleMonsterComponent.new],
   ];
 
   @override
-  List<List<Component>> getComponent() {
+  List<List<Monster Function()>> getComponent() {
     return monsters;
   }
 
@@ -22,7 +23,7 @@ class LevelOne extends Level {
   bool gameIsFinished(InvadersGame gameRef) {
     final child = gameRef.children;
     for (final element in child) {
-      if (element is MonsterComponent) {
+      if (element is Monster) {
         return false;
       }
     }

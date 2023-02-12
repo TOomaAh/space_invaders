@@ -25,7 +25,7 @@ class GameOver extends StatelessWidget {
                 child: AnimatedTextKit(
                   animatedTexts: [
                     ColorizeAnimatedText(
-                      'Paused',
+                      'Game Over',
                       textStyle: const TextStyle(fontSize: 50),
                       colors: const [
                         Colors.purple,

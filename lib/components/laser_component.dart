@@ -1,13 +1,10 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/painting.dart';
 import 'package:fyc/components/game_component.dart';
+import 'package:fyc/components/monster/monster.dart';
 
 import 'package:fyc/game/invaders.dart';
-
-import 'monster_component.dart';
 
 /// LaserComponent is a SpriteComponent
 class LaserComponent extends SpriteComponent
@@ -39,7 +36,7 @@ class LaserComponent extends SpriteComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
     var parentComponent = parent! as GameComponent;
-    if (other is MonsterComponent) {
+    if (other is Monster) {
       removeFromParent();
       FlameAudio.play('explosion.mp3');
       parentComponent.increaseScore();
@@ -48,6 +45,12 @@ class LaserComponent extends SpriteComponent
     if (other is ScreenHitbox) {
       removeFromParent();
     }
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    // TODO: implement onCollisionEnd
+    super.onCollisionEnd(other);
   }
 
   @override

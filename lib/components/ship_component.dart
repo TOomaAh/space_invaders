@@ -20,7 +20,7 @@ class ShipComponent extends SpriteComponent
           size: size,
         );
 
-  final String _assetPath = 'ship.png';
+  final String _assetPath = 'player.png';
   bool _isFire = false;
   _ShipDirection _direction = _ShipDirection.none;
 
@@ -68,6 +68,13 @@ class ShipComponent extends SpriteComponent
     if (_isFire) {
       await _fire();
     }
+    if (position.x < 0 && _direction == _ShipDirection.left) {
+      return;
+    } else if (position.x > gameRef.size.x - size.x &&
+        _direction == _ShipDirection.right) {
+      return;
+    }
+
     if (_direction == _ShipDirection.left) {
       position = position - Vector2(50, 0) * dt;
     } else if (_direction == _ShipDirection.right) {

@@ -67,9 +67,7 @@ class BackButtonCustom extends SimpleButton with HasGameRef<InvadersGame> {
 
   @override
   void action() {
-    gameComponent
-      ..removeAll(gameComponent.children.whereType<SpawnComponent>())
-      ..add(SpawnComponent(level: gameComponent.levels[0]));
+    gameComponent.resetGame();
     gameRef.overlays.remove('pause');
     gameRef.overlays.remove('score');
     gameRef.router.pop();

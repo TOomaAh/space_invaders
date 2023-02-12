@@ -25,11 +25,15 @@ class _SplashScreenGameState extends State<SplashScreenGame> {
     return Scaffold(
       body: FlameSplashScreen(
         showBefore: (BuildContext context) {
-          return const Image(image: AssetImage('assets/images/esgi_logo.png'));
+          return const Image(
+            image: AssetImage('assets/images/esgi_logo.png'),
+          );
         },
         showAfter: (BuildContext context) {
           return const Image(
             image: AssetImage('assets/images/space_invaders_logo.png'),
+            height: 500,
+            width: 500,
           );
         },
         theme: FlameSplashTheme.dark,

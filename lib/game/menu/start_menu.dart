@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flame/components.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fyc/game/invaders.dart';
@@ -27,7 +29,7 @@ class StartMenu extends Component with HasGameRef<InvadersGame> {
       ),
       _leave_button = RoundedButton(
         text: 'Leave',
-        action: () => gameRef.router.pushNamed('leave'),
+        action: () => exit(0),
         color: const Color(0xffadde6c),
         borderColor: const Color(0xffedffab),
       ),
